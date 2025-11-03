@@ -19,7 +19,8 @@
     "db:studio": "drizzle-kit studio",
     "db:test": "tsx src/infra/db/test-connection.ts",
     "seed": "tsx src/infra/db/seed.ts",
-    "generate-secrets": "node scripts/generate-secrets.js"
+    "generate-secrets": "node scripts/generate-secrets.js",
+    "post-deploy": "node scripts/post-deploy.js"
   },
   "repository": {
     "type": "git",
