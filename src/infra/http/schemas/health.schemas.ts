@@ -16,6 +16,30 @@ export const healthSchema = {
         timestamp: { type: "string", format: "date-time" },
         uptime: { type: "number" },
         version: { type: "string" },
+        database: {
+          type: "object",
+          properties: {
+            status: { type: "string" },
+            responseTime: { type: "string" },
+          },
+        },
+      },
+    },
+    503: {
+      description: "API is degraded",
+      type: "object",
+      properties: {
+        status: { type: "string" },
+        timestamp: { type: "string", format: "date-time" },
+        uptime: { type: "number" },
+        version: { type: "string" },
+        database: {
+          type: "object",
+          properties: {
+            status: { type: "string" },
+            error: { type: "string" },
+          },
+        },
       },
     },
   },
