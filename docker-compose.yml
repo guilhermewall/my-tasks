@@ -1,0 +1,58 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: my-tasks-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: mytasks
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U docker -d mytasks"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Drizzle Studio - Interface visual para o banco
+  drizzle-studio:
+    image: node:20-alpine
+    container_name: my-tasks-drizzle-studio
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: sh -c "npm install && npm run db:studio"
+    ports:
+      - "4983:4983"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgresql://docker:docker@postgres:5432/mytasks
+
+  # pgAdmin - Opcional, para gerenciar o banco visualmente
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: my-tasks-pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    profiles:
+      - tools
+
+volumes:
+  postgres_data:
+    name: my-tasks-postgres-data
+  pgadmin_data:
+    name: my-tasks-pgadmin-data
