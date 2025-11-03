@@ -1,5 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { AuthError } from "@/core/errors/auth-error";
+import { JwtTokenService } from "@/infra/auth/jwt-token-service";
 
 declare module "fastify" {
   interface FastifyRequest {
@@ -7,6 +8,12 @@ declare module "fastify" {
   }
 }
 
+const tokenService = new JwtTokenService();
+
+/**
+ * Middleware de autenticação
+ * Valida o token JWT e extrai o userId
+ */
 export async function authMiddleware(
   request: FastifyRequest,
   _reply: FastifyReply
@@ -24,9 +31,11 @@ export async function authMiddleware(
       throw new AuthError("Invalid authorization header format");
     }
 
-    // O token será validado pelo TokenService no use case
-    // Aqui apenas extraímos o token e deixamos disponível
-    request.headers["x-access-token"] = token;
+    // Valida e decodifica o token
+    const payload = tokenService.verifyAccessToken(token);
+
+    // Adiciona userId ao request para uso nos handlers
+    request.userId = payload.sub;
   } catch (error) {
     if (error instanceof AuthError) {
       throw error;
