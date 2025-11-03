@@ -18,11 +18,14 @@ export const listTasksSchema = z.object({
     .min(1, "Busca deve ter no mínimo 1 caractere")
     .optional(),
 
-  limit: z
-    .number()
+  limit: z.coerce
+    .number({
+      message: "Limit deve ser um número",
+    })
     .int("Limit deve ser um número inteiro")
     .min(1, "Limit deve ser no mínimo 1")
     .max(100, "Limit deve ser no máximo 100")
+    .optional()
     .default(20),
 
   cursor: z.string().min(1, "Cursor inválido").optional(),
@@ -31,6 +34,7 @@ export const listTasksSchema = z.object({
     .enum(["asc", "desc"], {
       message: "Order deve ser: asc ou desc",
     })
+    .optional()
     .default("desc"),
 });
 
