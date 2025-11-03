@@ -4,3 +4,6 @@ export * from "./validation-error";
 export * from "./auth-error";
 export * from "./forbidden-error";
 export * from "./conflict-error";
+export * from "./email-already-exists-error";
+export * from "./invalid-credentials-error";
+export * from "./invalid-token-error";
