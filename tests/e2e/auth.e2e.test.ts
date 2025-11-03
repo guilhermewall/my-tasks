@@ -283,10 +283,7 @@ describe("Auth E2E Tests", () => {
         },
       });
 
-      expect(response.statusCode).toBe(200);
-
-      const body = JSON.parse(response.body);
-      expect(body.message).toContain("revoked");
+      expect(response.statusCode).toBe(204);
     });
 
     it("should be idempotent - accept invalid/already revoked tokens", async () => {
@@ -300,7 +297,7 @@ describe("Auth E2E Tests", () => {
       });
 
       // Aceita qualquer token (idempotente)
-      expect(response.statusCode).toBe(200);
+      expect(response.statusCode).toBe(204);
     });
   });
 
@@ -354,7 +351,7 @@ describe("Auth E2E Tests", () => {
         },
       });
 
-      expect(logoutResponse.statusCode).toBe(200);
+      expect(logoutResponse.statusCode).toBe(204);
 
       // 5. Tentar usar token revogado
       const tryRefreshResponse = await app.inject({
