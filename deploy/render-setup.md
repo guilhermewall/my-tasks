@@ -37,13 +37,12 @@ JWT_REFRESH_SECRET=87934281cd0a10d4d6c4b0187c05b77c63731614271e41cee6d94527bbf97
 
 ### ✅ **Comandos Automatizados:**
 
-**Build:**
-
-- `npm ci` - Instalar dependências
+**Build (prepara a aplicação):**
+- `npm install --include=dev` - Instalar todas as dependências (incluindo dev)
 - `npm run build` - Compilar TypeScript para produção
+- `npm prune --production` - Remover devDependencies (economizar espaço)
 
 **Start (quando servidor inicia):**
-
 - `npm run db:migrate:prod` - Executar migrações do banco
 - `npm run post-deploy` - Setup pós-deploy (inclui seed se habilitado)
 - `npm start` - Iniciar servidor#### 📊 **Outras variáveis** (já configuradas no render.yaml):

@@ -5,8 +5,9 @@ services:
     plan: free
     region: oregon
     buildCommand: |
-      npm ci
+      npm install --include=dev
       npm run build
+      npm prune --production
     startCommand: npm run start:prod
     healthCheckPath: /health
     envVars:
