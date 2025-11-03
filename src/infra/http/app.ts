@@ -44,9 +44,11 @@ export async function buildApp(
 
   // CORS - permitir requisições de diferentes origens
   await app.register(cors, {
-    origin: env.CORS_ORIGIN || "*",
+    origin: true, // Permite todas as origens
     credentials: true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    exposedHeaders: ["Content-Length", "Content-Type"],
   });
 
   // Helmet - headers de segurança
@@ -87,7 +89,10 @@ export async function buildApp(
       },
       servers: [
         {
-          url: env.API_URL || `http://${env.HOST}:${env.PORT}`,
+          url: env.API_URL || 
+            (env.NODE_ENV === "production" 
+              ? `http://${env.HOST}:${env.PORT}` 
+              : `http://localhost:${env.PORT}`),
           description:
             env.NODE_ENV === "production"
               ? "Production server"

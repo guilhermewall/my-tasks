@@ -32,10 +32,14 @@ export const updateTaskSchema = z
       .refine(
         (val) => {
           // Aceita formato ISO 8601 completo ou apenas data (YYYY-MM-DD)
-          const isoRegex = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d{3})?Z?)?$/;
+          const isoRegex =
+            /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d{3})?Z?)?$/;
           return isoRegex.test(val);
         },
-        { message: "Data de vencimento deve estar no formato YYYY-MM-DD ou ISO 8601" }
+        {
+          message:
+            "Data de vencimento deve estar no formato YYYY-MM-DD ou ISO 8601",
+        }
       )
       .transform((val) => {
         // Se vier apenas a data (YYYY-MM-DD), adiciona horário
