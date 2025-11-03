@@ -35,14 +35,16 @@ JWT_REFRESH_SECRET=87934281cd0a10d4d6c4b0187c05b77c63731614271e41cee6d94527bbf97
 5. **Adicione apenas as 2 variáveis JWT** (geradas no passo 1)
 6. **Deploy automático** - O resto é tudo automático! 🎉
 
-### ✅ **Comandos Automatizados no Build:**
+### ✅ **Comandos Automatizados:**
 
+**Build:**
 - `npm ci` - Instalar dependências
-- `npm run build` - Compilar TypeScript
-- `npm run db:migrate:prod` - Executar migrações
-- `npm run post-deploy` - Setup pós-deploy (inclui seed)
+- `npm run build` - Compilar TypeScript para produção
 
-#### 📊 **Outras variáveis** (já configuradas no render.yaml):
+**Start (quando servidor inicia):**
+- `npm run db:migrate:prod` - Executar migrações do banco
+- `npm run post-deploy` - Setup pós-deploy (inclui seed se habilitado)
+- `npm start` - Iniciar servidor#### 📊 **Outras variáveis** (já configuradas no render.yaml):
 
 - ✅ `NODE_ENV=production`
 - ✅ `HOST=0.0.0.0`

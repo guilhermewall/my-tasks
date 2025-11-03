@@ -22,7 +22,8 @@
     "seed": "tsx src/infra/db/seed.ts",
     "seed:prod": "node dist/infra/db/seed.js",
     "generate-secrets": "node scripts/generate-secrets.js",
-    "post-deploy": "node scripts/post-deploy.js"
+    "post-deploy": "node scripts/post-deploy.js",
+    "start:prod": "npm run db:migrate:prod && npm run post-deploy && npm start"
   },
   "repository": {
     "type": "git",
