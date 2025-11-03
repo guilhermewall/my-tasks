@@ -3,13 +3,19 @@ services:
     name: my-tasks-api
     runtime: node
     plan: free
-    buildCommand: npm install && npm run build
+    region: oregon
+    buildCommand: |
+      npm ci
+      npm run build
     startCommand: npm start
+    healthCheckPath: /health
     envVars:
       - key: NODE_ENV
         value: production
       - key: HOST
         value: "0.0.0.0"
+      - key: PORT
+        value: "10000"
       - key: CORS_ORIGIN
         value: "*"
       - key: LOG_LEVEL
@@ -24,7 +30,12 @@ services:
         value: "10"
       - key: RATE_LIMIT_TASKS
         value: "120"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: my-tasks-db
+          property: connectionString
 
 databases:
   - name: my-tasks-db
     plan: free
+    region: oregon

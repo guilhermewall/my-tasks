@@ -18,7 +18,8 @@
     "db:migrate": "tsx src/infra/db/migrate.ts",
     "db:studio": "drizzle-kit studio",
     "db:test": "tsx src/infra/db/test-connection.ts",
-    "seed": "tsx src/infra/db/seed.ts"
+    "seed": "tsx src/infra/db/seed.ts",
+    "generate-secrets": "node scripts/generate-secrets.js"
   },
   "repository": {
     "type": "git",
