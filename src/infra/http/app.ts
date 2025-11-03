@@ -2,6 +2,8 @@ import Fastify, { FastifyInstance } from "fastify";
 import cors from "@fastify/cors";
 import helmet from "@fastify/helmet";
 import rateLimit from "@fastify/rate-limit";
+import swagger from "@fastify/swagger";
+import swaggerUi from "@fastify/swagger-ui";
 import { errorHandler } from "./error-handler";
 import { routes } from "./routes";
 import { env } from "@infra/config/env";
@@ -22,6 +24,7 @@ export async function buildApp(
   const app = Fastify({
     logger: options.logger ?? {
       level: env.LOG_LEVEL || "info",
+      base: null, // Remove pid e hostname dos logs
       transport:
         env.NODE_ENV === "development"
           ? {
@@ -62,6 +65,78 @@ export async function buildApp(
       error: "Too Many Requests",
       message: "Rate limit exceeded. Please try again later.",
     }),
+  });
+
+  // Swagger - Documentação OpenAPI
+  await app.register(swagger, {
+    openapi: {
+      openapi: "3.0.0",
+      info: {
+        title: "My Tasks API",
+        description:
+          "API RESTful para gerenciamento de tarefas com autenticação JWT. Implementada com Clean Architecture, Fastify, Drizzle ORM e PostgreSQL.",
+        version: "1.0.0",
+        contact: {
+          name: "API Support",
+          email: "support@mytasks.com",
+        },
+        license: {
+          name: "MIT",
+          url: "https://opensource.org/licenses/MIT",
+        },
+      },
+      servers: [
+        {
+          url: "http://localhost:3333",
+          description: "Development server",
+        },
+      ],
+      tags: [
+        {
+          name: "Health",
+          description: "Health check endpoints",
+        },
+        {
+          name: "Auth",
+          description: "Authentication and authorization endpoints",
+        },
+        {
+          name: "Tasks",
+          description: "Task management endpoints",
+        },
+      ],
+      components: {
+        securitySchemes: {
+          bearerAuth: {
+            type: "http",
+            scheme: "bearer",
+            bearerFormat: "JWT",
+            description: "JWT access token obtained from /auth/login",
+          },
+        },
+      },
+    },
+  });
+
+  // Swagger UI
+  await app.register(swaggerUi, {
+    routePrefix: "/docs",
+    uiConfig: {
+      docExpansion: "list",
+      deepLinking: true,
+      displayRequestDuration: true,
+      filter: true,
+    },
+    uiHooks: {
+      onRequest: function (_request, _reply, next) {
+        next();
+      },
+      preHandler: function (_request, _reply, next) {
+        next();
+      },
+    },
+    staticCSP: true,
+    transformStaticCSP: (header) => header,
   });
 
   // Error handler global

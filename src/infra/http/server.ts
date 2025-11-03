@@ -6,9 +6,7 @@ import { env } from "@infra/config/env";
  */
 async function start() {
   try {
-    const app = await buildApp({
-      logger: true,
-    });
+    const app = await buildApp();
 
     // Graceful shutdown
     const closeGracefully = async (signal: string) => {

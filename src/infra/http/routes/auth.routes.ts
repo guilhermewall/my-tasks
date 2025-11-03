@@ -1,10 +1,16 @@
 import { FastifyInstance } from "fastify";
 import {
-  registerSchema,
-  loginSchema,
-  refreshTokenSchema,
-  revokeTokenSchema,
+  registerSchema as registerZod,
+  loginSchema as loginZod,
+  refreshTokenSchema as refreshTokenZod,
+  revokeTokenSchema as revokeTokenZod,
 } from "@/interfaces/http/dtos/auth";
+import {
+  loginSchema,
+  logoutSchema,
+  refreshTokenSchema,
+  registerSchema,
+} from "../schemas/auth.schemas";
 import { RegisterUserUseCase } from "@/app/use-cases/auth/register-user.use-case";
 import { LoginUserUseCase } from "@/app/use-cases/auth/login-user.use-case";
 import { RefreshTokenUseCase } from "@/app/use-cases/auth/refresh-token.use-case";
@@ -34,56 +40,78 @@ export async function authRoutes(app: FastifyInstance) {
   const revokeToken = new RevokeTokenUseCase(tokenService);
 
   // POST /auth/register
-  app.post("/auth/register", async (request, reply) => {
-    const body = registerSchema.parse(request.body);
-    const result = await registerUser.execute(body);
+  app.post(
+    "/auth/register",
+    {
+      schema: registerSchema,
+    },
+    async (request, reply) => {
+      const body = registerZod.parse(request.body);
+      const result = await registerUser.execute(body);
 
-    return reply.status(201).send({
-      user: {
-        id: result.user.id,
-        name: result.user.name,
-        email: result.user.email,
-        createdAt: result.user.createdAt,
-      },
-      accessToken: result.tokens.accessToken,
-      refreshToken: result.tokens.refreshToken,
-    });
-  });
+      return reply.status(201).send({
+        user: {
+          id: result.user.id,
+          name: result.user.name,
+          email: result.user.email,
+          createdAt: result.user.createdAt,
+        },
+        accessToken: result.tokens.accessToken,
+        refreshToken: result.tokens.refreshToken,
+      });
+    }
+  );
 
   // POST /auth/login
-  app.post("/auth/login", async (request, reply) => {
-    const body = loginSchema.parse(request.body);
-    const result = await loginUser.execute(body);
+  app.post(
+    "/auth/login",
+    {
+      schema: loginSchema,
+    },
+    async (request, reply) => {
+      const body = loginZod.parse(request.body);
+      const result = await loginUser.execute(body);
 
-    return reply.status(200).send({
-      user: {
-        id: result.user.id,
-        name: result.user.name,
-        email: result.user.email,
-      },
-      accessToken: result.tokens.accessToken,
-      refreshToken: result.tokens.refreshToken,
-    });
-  });
+      return reply.status(200).send({
+        user: {
+          id: result.user.id,
+          name: result.user.name,
+          email: result.user.email,
+        },
+        accessToken: result.tokens.accessToken,
+        refreshToken: result.tokens.refreshToken,
+      });
+    }
+  );
 
   // POST /auth/refresh
-  app.post("/auth/refresh", async (request, reply) => {
-    const body = refreshTokenSchema.parse(request.body);
-    const result = await refreshToken.execute(body);
+  app.post(
+    "/auth/refresh",
+    {
+      schema: refreshTokenSchema,
+    },
+    async (request, reply) => {
+      const body = refreshTokenZod.parse(request.body);
+      const result = await refreshToken.execute(body);
 
-    return reply.status(200).send({
-      accessToken: result.tokens.accessToken,
-      refreshToken: result.tokens.refreshToken,
-    });
-  });
+      return reply.status(200).send({
+        accessToken: result.tokens.accessToken,
+        refreshToken: result.tokens.refreshToken,
+      });
+    }
+  );
 
   // DELETE /auth/logout
-  app.delete("/auth/logout", async (request, reply) => {
-    const body = revokeTokenSchema.parse(request.body);
-    await revokeToken.execute(body);
+  app.delete(
+    "/auth/logout",
+    {
+      schema: logoutSchema,
+    },
+    async (request, reply) => {
+      const body = revokeTokenZod.parse(request.body);
+      await revokeToken.execute(body);
 
-    return reply.status(200).send({
-      message: "Token revoked successfully",
-    });
-  });
+      return reply.status(204).send();
+    }
+  );
 }
