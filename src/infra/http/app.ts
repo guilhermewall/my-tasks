@@ -87,8 +87,11 @@ export async function buildApp(
       },
       servers: [
         {
-          url: "http://localhost:3333",
-          description: "Development server",
+          url: env.API_URL || `http://${env.HOST}:${env.PORT}`,
+          description:
+            env.NODE_ENV === "production"
+              ? "Production server"
+              : "Development server",
         },
       ],
       tags: [
