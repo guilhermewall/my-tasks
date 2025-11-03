@@ -9,6 +9,7 @@ const envSchema = z.object({
     .enum(["development", "production", "test"])
     .default("development"),
   PORT: z.coerce.number().default(3333),
+  HOST: z.string().default("0.0.0.0"),
 
   // Database
   DATABASE_URL: z.string().url(),
@@ -22,6 +23,12 @@ const envSchema = z.object({
   // Security
   BCRYPT_COST: z.coerce.number().min(10).max(15).default(11),
   ALLOWED_ORIGINS: z.string().transform((val) => val.split(",")),
+  CORS_ORIGIN: z.string().default("*"),
+
+  // Logging
+  LOG_LEVEL: z
+    .enum(["fatal", "error", "warn", "info", "debug", "trace"])
+    .default("info"),
 
   // Rate Limiting
   RATE_LIMIT_AUTH: z.coerce.number().default(10),
