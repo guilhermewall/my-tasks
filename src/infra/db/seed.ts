@@ -242,8 +242,7 @@ async function seedTasks(userIds: {
       id: randomUUID(),
       userId: userIds.mariaId,
       title: "Atualizar guia de estilo",
-      description:
-        "Documentar padrões de cores, tipografia e componentes.",
+      description: "Documentar padrões de cores, tipografia e componentes.",
       status: "pending" as const,
       priority: "low" as const,
       dueDate: toDateString(nextMonth),
