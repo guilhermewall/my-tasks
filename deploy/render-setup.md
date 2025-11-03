@@ -3,8 +3,9 @@
 ## ✨ **NOVO: Deploy 100% Automatizado!**
 
 Agora o `render.yaml` executa **TUDO automaticamente**:
+
 - ✅ Build da aplicação
-- ✅ Migrações do banco  
+- ✅ Migrações do banco
 - ✅ Seed de dados (opcional)
 - ✅ Health checks configurados
 
@@ -17,6 +18,7 @@ npm run generate-secrets
 ```
 
 Isso vai gerar algo como:
+
 ```bash
 JWT_ACCESS_SECRET=98a8303e6ffc9ffd8775e701d3e42b63040c31d65f2a29c2ccb6a14ea2287b1b...
 JWT_REFRESH_SECRET=87934281cd0a10d4d6c4b0187c05b77c63731614271e41cee6d94527bbf9753...

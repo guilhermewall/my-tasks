@@ -22,7 +22,10 @@ const envSchema = z.object({
 
   // Security
   BCRYPT_COST: z.coerce.number().min(10).max(15).default(11),
-  ALLOWED_ORIGINS: z.string().default("*").transform((val) => val.split(",")),
+  ALLOWED_ORIGINS: z
+    .string()
+    .default("*")
+    .transform((val) => val.split(",")),
   CORS_ORIGIN: z.string().default("*"),
 
   // Logging
