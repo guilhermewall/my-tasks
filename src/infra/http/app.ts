@@ -3,6 +3,7 @@ import cors from "@fastify/cors";
 import helmet from "@fastify/helmet";
 import rateLimit from "@fastify/rate-limit";
 import { errorHandler } from "./error-handler";
+import { routes } from "./routes";
 import { env } from "@infra/config/env";
 
 export interface BuildAppOptions {
@@ -91,6 +92,9 @@ export async function buildApp(
   app.setSerializerCompiler(() => {
     return (data) => JSON.stringify(data);
   });
+
+  // Registrar rotas
+  await app.register(routes);
 
   return app;
 }
