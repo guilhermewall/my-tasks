@@ -5,6 +5,11 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "node",
+    // Força testes de integração a rodarem sequencialmente para evitar conflitos no DB
+    sequence: {
+      hooks: "stack",
+    },
+    fileParallelism: false,
     coverage: {
       provider: "v8",
       reporter: ["text", "json", "html"],
