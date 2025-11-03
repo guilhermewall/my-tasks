@@ -38,7 +38,7 @@ JWT_REFRESH_SECRET=87934281cd0a10d4d6c4b0187c05b77c63731614271e41cee6d94527bbf97
 ### ✅ **Comandos Automatizados no Build:**
 
 - `npm ci` - Instalar dependências
-- `npm run build` - Compilar TypeScript 
+- `npm run build` - Compilar TypeScript
 - `npm run db:migrate:prod` - Executar migrações
 - `npm run post-deploy` - Setup pós-deploy (inclui seed)
 
