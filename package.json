@@ -1,0 +1,67 @@
+{
+  "name": "my-tasks",
+  "version": "1.0.0",
+  "description": "Todo API with Node.js, Fastify, Drizzle ORM, Zod, JWT, and Docker",
+  "type": "module",
+  "main": "dist/infra/http/server.js",
+  "scripts": {
+    "dev": "tsx watch src/infra/http/server.ts",
+    "build": "tsup src --format esm --dts",
+    "start": "node dist/infra/http/server.js",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+    "seed": "tsx src/infra/db/seed.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guilhermewall/my-tasks.git"
+  },
+  "keywords": [
+    "todo",
+    "api",
+    "fastify",
+    "drizzle",
+    "clean-architecture",
+    "jwt",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guilhermewall/my-tasks/issues"
+  },
+  "homepage": "https://github.com/guilhermewall/my-tasks#readme",
+  "dependencies": {
+    "@fastify/cors": "^11.1.0",
+    "@fastify/helmet": "^13.0.2",
+    "@fastify/jwt": "^10.0.0",
+    "@fastify/rate-limit": "^10.3.0",
+    "bcryptjs": "^3.0.3",
+    "drizzle-orm": "^0.44.7",
+    "fastify": "^5.6.1",
+    "pino": "^10.1.0",
+    "postgres": "^3.4.7",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^24.9.2",
+    "@typescript-eslint/eslint-plugin": "^8.46.2",
+    "@typescript-eslint/parser": "^8.46.2",
+    "@vitest/coverage-v8": "^4.0.6",
+    "@vitest/ui": "^4.0.6",
+    "drizzle-kit": "^0.31.6",
+    "eslint": "^9.39.0",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.6"
+  }
+}
