@@ -29,8 +29,21 @@ export const updateTaskSchema = z
 
     dueDate: z
       .string()
-      .datetime("Data de vencimento deve estar no formato ISO 8601")
-      .transform((val) => new Date(val))
+      .refine(
+        (val) => {
+          // Aceita formato ISO 8601 completo ou apenas data (YYYY-MM-DD)
+          const isoRegex = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d{3})?Z?)?$/;
+          return isoRegex.test(val);
+        },
+        { message: "Data de vencimento deve estar no formato YYYY-MM-DD ou ISO 8601" }
+      )
+      .transform((val) => {
+        // Se vier apenas a data (YYYY-MM-DD), adiciona horário
+        if (val.length === 10) {
+          return new Date(`${val}T00:00:00.000Z`);
+        }
+        return new Date(val);
+      })
       .optional()
       .nullable(),
   })
