@@ -1,4 +1,8 @@
+import { config } from "dotenv";
 import { z } from "zod";
+
+// Carregar variáveis de ambiente do arquivo .env
+config();
 
 const envSchema = z.object({
   NODE_ENV: z

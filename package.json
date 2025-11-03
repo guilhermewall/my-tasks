@@ -15,8 +15,9 @@
     "test:coverage": "vitest --coverage",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
+    "db:migrate": "tsx src/infra/db/migrate.ts",
     "db:studio": "drizzle-kit studio",
+    "db:test": "tsx src/infra/db/test-connection.ts",
     "seed": "tsx src/infra/db/seed.ts"
   },
   "repository": {
@@ -44,6 +45,7 @@
     "@fastify/jwt": "^10.0.0",
     "@fastify/rate-limit": "^10.3.0",
     "bcryptjs": "^3.0.3",
+    "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.7",
     "fastify": "^5.6.1",
     "pino": "^10.1.0",
