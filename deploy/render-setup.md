@@ -24,13 +24,23 @@ JWT_ACCESS_SECRET=98a8303e6ffc9ffd8775e701d3e42b63040c31d65f2a29c2ccb6a14ea2287b
 JWT_REFRESH_SECRET=87934281cd0a10d4d6c4b0187c05b77c63731614271e41cee6d94527bbf9753...
 ```
 
-## 2. Preparação do Código
+## 2. Deploy no Render
 
-```bash
-git add .
-git commit -m "feat: deploy automatizado para Render"
-git push
-```
+### Passos simples:
+
+1. **Vá para [render.com](https://render.com)**
+2. **New → Blueprint**
+3. **Conecte o repositório**: `guilhermewall/my-tasks`
+4. **Branch**: `main` (ou sua branch atual)
+5. **Adicione apenas as 2 variáveis JWT** (geradas no passo 1)
+6. **Deploy automático** - O resto é tudo automático! 🎉
+
+### ✅ **Comandos Automatizados no Build:**
+
+- `npm ci` - Instalar dependências
+- `npm run build` - Compilar TypeScript 
+- `npm run db:migrate:prod` - Executar migrações
+- `npm run post-deploy` - Setup pós-deploy (inclui seed)
 
 #### 📊 **Outras variáveis** (já configuradas no render.yaml):
 

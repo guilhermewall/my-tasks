@@ -12,7 +12,13 @@ try {
   // Se a variável SEED_ON_DEPLOY estiver definida, executa o seed
   if (process.env.SEED_ON_DEPLOY === 'true') {
     console.log('🌱 Executando seed de dados...');
-    execSync('npm run seed', { stdio: 'inherit' });
+    
+    // Usar comando apropriado baseado no ambiente
+    const seedCommand = process.env.NODE_ENV === 'production' 
+      ? 'npm run seed:prod' 
+      : 'npm run seed';
+      
+    execSync(seedCommand, { stdio: 'inherit' });
     console.log('✅ Seed executado com sucesso!');
   } else {
     console.log('⏭️  Seed pulado (defina SEED_ON_DEPLOY=true para executar)');

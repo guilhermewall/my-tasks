@@ -16,9 +16,11 @@
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx src/infra/db/migrate.ts",
+    "db:migrate:prod": "node dist/infra/db/migrate.js",
     "db:studio": "drizzle-kit studio",
     "db:test": "tsx src/infra/db/test-connection.ts",
     "seed": "tsx src/infra/db/seed.ts",
+    "seed:prod": "node dist/infra/db/seed.js",
     "generate-secrets": "node scripts/generate-secrets.js",
     "post-deploy": "node scripts/post-deploy.js"
   },
