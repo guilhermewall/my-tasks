@@ -49,8 +49,12 @@ export const createTaskSchema = z.object({
       }
       return new Date(val);
     })
-    .refine((date) => date > new Date(), {
-      message: "Data de vencimento deve ser no futuro",
+    .refine((date) => {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Zera horas para comparar apenas a data
+      return date >= today;
+    }, {
+      message: "Data de vencimento deve ser hoje ou no futuro",
     })
     .optional()
     .nullable(),
