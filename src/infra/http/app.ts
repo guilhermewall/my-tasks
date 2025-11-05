@@ -58,6 +58,7 @@ export async function buildApp(
   // Helmet - headers de segurança
   await app.register(helmet, {
     contentSecurityPolicy: env.NODE_ENV === "production" ? undefined : false,
+    crossOriginResourcePolicy: { policy: "cross-origin" }, // Permite assets do Swagger UI
   });
 
   // Rate Limiting - proteção contra DDoS
@@ -93,11 +94,7 @@ export async function buildApp(
       },
       servers: [
         {
-          url:
-            env.API_URL ||
-            (env.NODE_ENV === "production"
-              ? `http://${env.HOST}:${env.PORT}`
-              : `http://localhost:${env.PORT}`),
+          url: "/", // Base relativa - usa o mesmo host do /docs
           description:
             env.NODE_ENV === "production"
               ? "Production server"
